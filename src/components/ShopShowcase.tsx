@@ -1,5 +1,4 @@
 export default function ShopShowcase(props: any) {
-  console.log(props.resourse);
   const showcaseBox = Array(9).fill(
     <div className="relative shadow-lg border border-rose-500 hover:border-black/30">
       {props.catagory == "marker" && props.resourse[0]}
