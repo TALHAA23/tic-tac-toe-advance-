@@ -1,7 +1,8 @@
+import React from "react";
 import { Sign } from "../assets/type";
 import Mark from "./Mark";
 import { useToggleTurn, useTurn } from "../hooks/TurnAndToggleProvider";
-import { MouseEvent, ReactElement, useRef } from "react";
+import { MouseEvent, ReactElement, useEffect, useRef, useState } from "react";
 import {
   useBoard,
   useBoardChangeHandler,
@@ -13,13 +14,18 @@ import updateUIforCurrentMove from "../assets/updateUIforCurrentMove";
 import { useBoardTheme } from "../hooks/ThemeProvider";
 
 export default function PlayBoard() {
+  const [boxes, setBoxes] = useState<undefined | ReactElement[]>();
   const winnerAttributes = useWinner();
   const turn = useTurn();
   const { grid } = readURL();
-  const renderBoxes: ReactElement[] = [];
-  for (let i = 0; i < grid; i++)
-    for (let j = 0; j < grid; j++)
-      renderBoxes.push(<Box key={`${i},${j}`} cords={`${i},${j}`} />);
+
+  useEffect(() => {
+    const renderBoxes: ReactElement[] = [];
+    for (let i = 0; i < grid; i++)
+      for (let j = 0; j < grid; j++)
+        renderBoxes.push(<Box key={`${i},${j}`} cords={`${i},${j}`} />);
+    setBoxes(renderBoxes);
+  }, []);
 
   return (
     <section className="relative w-full h-screen flex items-center justify-center font-[playPretend]">
@@ -39,7 +45,7 @@ export default function PlayBoard() {
           className={`w-full h-full p-1 grid gap-1 ${useBoardTheme()}`}
           style={{ gridTemplateColumns: `repeat(${grid},1fr)` }}
         >
-          {renderBoxes}
+          {boxes}
         </div>
       </div>
       {winnerAttributes.isAnnounced && <Result />}
@@ -51,7 +57,7 @@ interface BoxProps {
   cords: string;
 }
 
-function Box(props: BoxProps) {
+const Box = React.memo((props: BoxProps) => {
   const board = useBoard();
   const boxReverseCount = useRef(0);
   const [x, y] = props.cords.split(",");
@@ -77,4 +83,49 @@ function Box(props: BoxProps) {
       <Mark markedBy={currentCord} />
     </div>
   );
-}
+});
+
+// function Box(props: BoxProps) {
+//   console.log("creating");
+//   const board = useBoard();
+//   const boxReverseCount = useRef(0);
+//   const [x, y] = props.cords.split(",");
+//   const turn = useTurn();
+//   const toogleTurn = useToggleTurn();
+//   const boardChangeHandler = useBoardChangeHandler();
+//   const currentCord: Sign = board[x][y];
+
+//   function markCurrentBox(event: MouseEvent) {
+//     const target = event.currentTarget as HTMLElement;
+//     toogleTurn();
+//     boardChangeHandler(target.id, turn.sign);
+//     updateUIforCurrentMove(target);
+//   }
+
+//   return (
+//     <div
+//       onClick={(e) => markCurrentBox(e)}
+//       id={props.cords}
+//       data-reserve-count={boxReverseCount.current}
+//       className="relative rounded border border-slate-600/30 flex items-center justify-center"
+//     >
+//       <Mark markedBy={currentCord} />
+//     </div>
+//   );
+// }
+
+// function createBoxes() {
+//   const { grid } = readURL();
+//   console.log(grid);
+//   const renderBoxes: ReactElement[] = [];
+//   return () => {
+//     if (renderBoxes.length) return renderBoxes;
+//     console.log("creating");
+//     for (let i = 0; i < grid; i++)
+//       for (let j = 0; j < grid; j++)
+//         renderBoxes.push(<Box key={`${i},${j}`} cords={`${i},${j}`} />);
+
+//     return renderBoxes;
+//   };
+// }
+// const myBoxes = createBoxes();
