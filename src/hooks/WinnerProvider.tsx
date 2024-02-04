@@ -16,11 +16,18 @@ type WinnerContextType = [
   () => void //reset
 ];
 
+interface Record {
+  X: number;
+  O: number;
+  draw: number;
+  [key: string]: any;
+}
+
 const initWinnerAttributes: WinnerAttributes = {
   isAnnounced: false,
   winner: null,
 };
-const initRecord = {
+const initRecord: Record = {
   X: 0,
   O: 0,
   draw: 0,

@@ -1,4 +1,4 @@
-import TicTacToe from "./TicTactoe";
+import TicTacToe from "./TicTacToe.tsx";
 import MatchMaking from "./components/MatchMaking";
 import PlayGroundAttributesProvider from "./hooks/PlayGroundAttributesProvider";
 import PlayBoard from "./components/PlayBoard";

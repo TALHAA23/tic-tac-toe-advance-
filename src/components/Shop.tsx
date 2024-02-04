@@ -46,7 +46,7 @@ export default function Shop() {
   const updateTheme = useThemeChanger();
   const components = ALL.map((theme) => (
     <div
-      onClick={() => updateTheme(theme.catagory, theme.resource)}
+      onClick={() => updateTheme && updateTheme(theme.catagory, theme.resource)}
       onMouseEnter={() =>
         setShowcase({
           catagory: theme.catagory,

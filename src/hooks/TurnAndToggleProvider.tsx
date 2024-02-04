@@ -29,12 +29,12 @@ const TurnAndToggleContext = createContext<TurnAndToogle>([
 export const useTurn = () => useContext(TurnAndToggleContext)[0];
 export const useToggleTurn = () => useContext(TurnAndToggleContext)[1];
 export default function TurnAndToggleProvier(props: Children) {
-  const [searchParam, setSearchParam] = useSearchParams();
+  const searchParam = useSearchParams();
   const [turn, setTurn] = useState(PLAYER1);
 
   useEffect(() => {
     PLAYER2.title = readURL().mode == "2p" ? "Player 02" : "Computer";
-  }, [searchParam]);
+  }, [searchParam[0]]);
 
   const toggleTurn = () =>
     setTurn((prevTurn) => ({

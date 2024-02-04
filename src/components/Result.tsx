@@ -2,6 +2,7 @@ import ReactConfetti from "react-confetti";
 import { useRecord, useReset, useWinner } from "../hooks/WinnerProvider";
 import { PLAYER1, PLAYER2 } from "../hooks/TurnAndToggleProvider";
 import { useNavigate } from "react-router-dom";
+import { Sign } from "../assets/type";
 export default function Result() {
   const navigate = useNavigate();
   const { winner } = useWinner();
@@ -46,7 +47,7 @@ export default function Result() {
   );
 }
 
-function winnerTitle(winner) {
+function winnerTitle(winner: Sign | "draw") {
   return winner == "draw"
     ? "Draw"
     : winner == PLAYER1.sign

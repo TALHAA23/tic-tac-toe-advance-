@@ -15,7 +15,7 @@ export default function myTheme(): Theme | false {
   return { board: myTheme.board, marker: newElement };
 }
 
-function createElementFromObject(obj) {
+function createElementFromObject(obj: any): any {
   if (Array.isArray(obj)) {
     return obj.map(createElementFromObject);
   } else if (typeof obj === "object" && obj !== null) {

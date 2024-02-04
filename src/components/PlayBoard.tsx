@@ -64,7 +64,7 @@ const Box = React.memo((props: BoxProps) => {
   const turn = useTurn();
   const toogleTurn = useToggleTurn();
   const boardChangeHandler = useBoardChangeHandler();
-  const currentCord: Sign = board[x][y];
+  const currentCord: Sign = board[+x][+y]; //type casting
 
   function markCurrentBox(event: MouseEvent) {
     const target = event.currentTarget as HTMLElement;
